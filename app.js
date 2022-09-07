@@ -1,3 +1,4 @@
+//Creating Cards
 class Card{
     constructor(suit, rank, value){
         this.suit = suit;
@@ -5,7 +6,7 @@ class Card{
         this.value = value;
     }
 }
-class Deck{
+class Deck{  //Lets test this funciton
     constructor(){
         this.cards = [];
     }
@@ -21,12 +22,44 @@ class Deck{
         
         }
        
-        shuffleDeck(){
-
-        }
+        shuffleDeck() {
+            let location1, location2, temp;
+            for (let i = 0; i < 1000; i++) {
+                location1 = Math.floor((Math.random() * this.cards.length));
+                location2 = Math.floor((Math.random() * this.cards.length));
+                temp = this.cards[location1];
+                this.cards[location1] = this.cards[location2];
+                this.cards[location2] = temp;
+             }
+         }
     
 }
+//Creating Players and Game
+class Player {
+    constructor(name){
+        this.playerName = name;
+        this.playerCards = [];
+    }
+}
+class Board{
+    constructor(){
+        this.cardsInMiddle = [];
+        this.players = [];
+    }
+    start(playerOne, playerTwo){
+        this.players.push(new Player(playerOne));
+        this.players.push(new Player(playerTwo));
+        let d = new Deck();
+        d.createDeck();
+        d.shuffleDeck();
+        this.players[0].playerCards = d.cards.slice(0,26);
+        this.players[1].playerCards = d.cards.slice(26,52);
+    }
+}
  
-const d = new Deck(); //creating a new deck instances named "d"
-d.createDeck(); //Calling to fill our array
-console.log(d.cards); //logging out our cards array
+let gameBoard = new Board();
+gameBoard.start("Tyson", "Lam");
+console.log(gameBoard.players);
+
+//Game Logic
+//Card1 = playerO
