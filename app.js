@@ -62,4 +62,16 @@ gameBoard.start("Tyson", "Lam");
 console.log(gameBoard.players);
 
 //Game Logic
-//Card1 = playerO
+//Card1 = playerOne top card .shift()?
+//Card2 = playerTwo top card
+let playerOneScore = 0; 
+let playerTwoSCore = 0;
+if(card1 === card2){
+    alert("It's a Tie!");
+}else if(card1 > card2){
+    alert("Player 1 Wins!")
+    playeOneScore++; //Adding a point for winner
+}else{
+    alert("Player 2 Wins!")
+    playerTwoScore++; // Adding a point for winner
+}
