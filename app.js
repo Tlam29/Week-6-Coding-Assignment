@@ -1,77 +1,84 @@
 //Creating Cards
-class Card{
+class Card {
     constructor(suit, rank, value){
         this.suit = suit;
         this.rank = rank;
         this.value = value;
     }
 }
-class Deck{  //Lets test this funciton
+
+class Deck {
     constructor(){
         this.cards = [];
     }
-     createDeck(){
-            let suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
-            let ranks = ['Ace', '2', '3', '4', '5', '6', '7','8', '9', '10','Jack','Queen', 'King'];
-            let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-            for(let i = 0; i < suits.length; i++){
-                for (let j = 0; j <ranks.length; j++){
-                    this.cards.push(new Card(suits[i], ranks[j], values[j]));
-                }
+    createDeck() {
+        let suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+        let ranks = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king'];
+        let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        for (let i = 0; i < suits.length; i++) {
+            for (let j = 0; j < ranks.length; j++) {
+                this.cards.push(new Card(suits[i], ranks[j], values[j]));
             }
-        
         }
-       
-        shuffleDeck() {
-            let location1, location2, temp;
-            for (let i = 0; i < 1000; i++) {
-                location1 = Math.floor((Math.random() * this.cards.length));
-                location2 = Math.floor((Math.random() * this.cards.length));
-                temp = this.cards[location1];
-                this.cards[location1] = this.cards[location2];
-                this.cards[location2] = temp;
-             }
+    }
+    shuffleDeck(){                                                  //Shuffling the cards
+        let location1, location2, temp;
+        for (let i = 0; i < 1000; i++) {
+            location1 = Math.floor((Math.random() * this.cards.length));
+            location2 = Math.floor((Math.random() * this.cards.length));
+            temp = this.cards[location1];
+            this.cards[location1] = this.cards[location2];
+            this.cards[location2] = temp;
          }
-    
+    }
 }
-//Creating Players and Game
+
 class Player {
-    constructor(name){
-        this.playerName = name;
+    constructor() {
         this.playerCards = [];
     }
 }
-class Board{
+
+class Computer{
     constructor(){
-        this.cardsInMiddle = [];
-        this.players = [];
-    }
-    start(playerOne, playerTwo){
-        this.players.push(new Player(playerOne));
-        this.players.push(new Player(playerTwo));
-        let d = new Deck();
-        d.createDeck();
-        d.shuffleDeck();
-        this.players[0].playerCards = d.cards.slice(0,26);
-        this.players[1].playerCards = d.cards.slice(26,52);
+        this.computerCards = []
     }
 }
- 
-let gameBoard = new Board();
-gameBoard.start("Tyson", "Lam");
-console.log(gameBoard.players);
+class Hand {
+    constructor() {
+        this.players = [];
+    }
+    start(player, computer) {
+        this.players.push(new Player(player));
+        this.players.push(new Computer(computer));
+        let newDeck = new Deck();
+        newDeck.createDeck();
+        newDeck.shuffleDeck();    
+        this.players[0].playerCards = newDeck.cards.slice(0, 26);
+        this.players[1].computerCards = newDeck.cards.slice(26, 52);
+    }
+}
+let playerHands = new Hand();
+playerHands.start('Player', 'Computer');
+console.log(playerHands.players);
 
-//Game Logic
-//Card1 = playerOne top card .shift()?
-//Card2 = playerTwo top card
-let playerOneScore = 0; 
-let playerTwoSCore = 0;
-if(card1 === card2){
-    alert("It's a Tie!");
-}else if(card1 > card2){
-    alert("Player 1 Wins!")
-    playeOneScore++; //Adding a point for winner
+
+let player1 = playerHands.players[0];
+let player2 = playerHands.players[1];
+let playerPoints = 0;
+let computerPoints = 0;
+for(let i = 0;i<playerHands.players[0].playerCards.length;i++){
+    if (player1.playerCards[i].value>player2.computerCards[i].value){
+        playerPoints++; //Adding Points to Player
+    } else {
+        computerPoints++; //Adding Points to computer
+    }
+}
+console.log(`player ${playerPoints} 
+Computer ${computerPoints}`);
+
+if(playerPoints > computerPoints){
+    console.log("Player Wins!")
 }else{
-    alert("Player 2 Wins!")
-    playerTwoScore++; // Adding a point for winner
+    console.log("Computer Wins!")
 }
