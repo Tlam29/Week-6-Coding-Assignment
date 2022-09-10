@@ -6,8 +6,8 @@ class Card {
         this.value = value;
     }
 }
-
-class Deck {
+//Making a Deck
+class Deck {        
     constructor(){
         this.cards = [];
     }
@@ -21,7 +21,8 @@ class Deck {
             }
         }
     }
-    shuffleDeck(){                                                  //Shuffling the cards
+    //Shuffling the cards
+    shuffleDeck(){                                                  
         let location1, location2, temp;
         for (let i = 0; i < 1000; i++) {
             location1 = Math.floor((Math.random() * this.cards.length));
@@ -32,7 +33,7 @@ class Deck {
          }
     }
 }
-
+//Creating to Player and Computers hands 
 class Player {
     constructor() {
         this.playerCards = [];
@@ -48,6 +49,7 @@ class Hand {
     constructor() {
         this.players = [];
     }
+    //Dealing the Cards
     start(player, computer) {
         this.players.push(new Player(player));
         this.players.push(new Computer(computer));
@@ -62,7 +64,7 @@ let playerHands = new Hand();
 playerHands.start('Player', 'Computer');
 console.log(playerHands.players);
 
-
+//Game logic
 let player1 = playerHands.players[0];
 let player2 = playerHands.players[1];
 let playerPoints = 0;
@@ -75,10 +77,14 @@ for(let i = 0;i<playerHands.players[0].playerCards.length;i++){
     }
 }
 console.log(`player ${playerPoints} 
-Computer ${computerPoints}`);
-
-if(playerPoints > computerPoints){
-    console.log("Player Wins!")
-}else{
-    console.log("Computer Wins!")
+    Computer ${computerPoints}`);
+    
+    function winnerIs(playerPoints,computerPoints){
+    if(playerPoints > computerPoints){ //Logging out the winner
+       return("Player Wins!")
+    }else{
+       return("Computer Wins!");
+    }
 }
+console.log(winnerIs());
+
